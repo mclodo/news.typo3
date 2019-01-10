@@ -1,0 +1,124 @@
+Index: typo3conf/ext/news/Classes/Controller/NewsController.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- typo3conf/ext/news/Classes/Controller/NewsController.php	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
++++ typo3conf/ext/news/Classes/Controller/NewsController.php	(revision )
+@@ -145,6 +145,7 @@
+         $demand->setTimeRestriction($settings['timeRestriction']);
+         $demand->setTimeRestrictionHigh($settings['timeRestrictionHigh']);
+         $demand->setArchiveRestriction($settings['archiveRestriction']);
++        $demand->setDomains($settings['domains']);
+         $demand->setExcludeAlreadyDisplayedNews($settings['excludeAlreadyDisplayedNews']);
+         $demand->setHideIdList($settings['hideIdList']);
+ 
+Index: typo3conf/ext/news/Configuration/TypoScript/setup.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- typo3conf/ext/news/Configuration/TypoScript/setup.txt	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
++++ typo3conf/ext/news/Configuration/TypoScript/setup.txt	(revision )
+@@ -76,6 +76,7 @@
+ 		cropMaxCharacters = 150
+ 		orderBy = datetime
+ 		orderDirection = desc
++		domains =
+ 		topNewsFirst = 0
+ 		otherTopNewsFirst = 0
+ 		orderByAllowed = sorting,author,uid,title,teaser,author,tstamp,crdate,datetime,categories.title
+Index: typo3conf/ext/news/Configuration/FlexForms/flexform_news.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- typo3conf/ext/news/Configuration/FlexForms/flexform_news.xml	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
++++ typo3conf/ext/news/Configuration/FlexForms/flexform_news.xml	(revision )
+@@ -126,6 +126,24 @@
+ 						</TCEforms>
+ 					</settings.orderDirection>
+ 
++					<!-- domains  -->
++					<settings.domains>
++						<TCEforms>
++							<label>Domains</label>
++							<config>
++								<type>select</type>
++								<renderType>selectSingle</renderType>
++								<foreign_table>pages</foreign_table>
++								<foreign_table_where> pid = 0 AND uid NOT IN (323,142) ORDER BY title ASC</foreign_table_where>
++								<items>
++									<numIndex index="0" type="array">
++										<numIndex index="0"></numIndex>
++										<numIndex index="1"></numIndex>
++									</numIndex>
++								</items>
++							</config>
++						</TCEforms>
++					</settings.domains>
+ 					<!-- datefield: select relevant file dateMenu  -->
+ 					<settings.dateField>
+ 						<TCEforms>
+Index: typo3conf/ext/news/Classes/Domain/Model/Dto/NewsDemand.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- typo3conf/ext/news/Classes/Domain/Model/Dto/NewsDemand.php	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
++++ typo3conf/ext/news/Classes/Domain/Model/Dto/NewsDemand.php	(revision )
+@@ -128,6 +128,9 @@
+     /** @var string */
+     protected $action;
+ 
++    /** @var string */
++    protected $domains;
++
+     /** @var string */
+     protected $class;
+ 
+@@ -201,6 +204,24 @@
+         return $this->dateManagement;
+     }
+ 
++    /**
++     *
++     * @param mixed $domains
++     * @return $this
++     */
++    public function setDomains($domains) {
++        $this->domains = $domains;
++        return $this;
++    }
++
++    /**
++     *
++     * @return mixed
++     */
++    public function getDomains() {
++        return $this->domains;
++    }
++
+     /**
+      * List of allowed categories
+      *
+Index: typo3conf/ext/news/Classes/Domain/Repository/NewsRepository.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- typo3conf/ext/news/Classes/Domain/Repository/NewsRepository.php	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
++++ typo3conf/ext/news/Classes/Domain/Repository/NewsRepository.php	(revision )
+@@ -288,6 +288,12 @@
+             $constraints['pid'] = $query->in('pid', $pidList);
+         }
+ 
++        // domains
++        if ($demand->getDomains() != 0) {
++            $constraints['domains'] = $query->equals('domains', $demand->getDomains());
++        }
++
++
+         // month & year OR year only
+         if ($demand->getYear() > 0) {
+             if (is_null($demand->getDateField())) {

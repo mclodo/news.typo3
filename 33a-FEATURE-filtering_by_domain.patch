@@ -1,0 +1,96 @@
+Index: typo3conf/ext/stratis_news/ext_tables.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- typo3conf/ext/stratis_news/ext_tables.sql	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
++++ typo3conf/ext/stratis_news/ext_tables.sql	(revision )
+@@ -12,6 +12,8 @@
+     activity3              TEXT,
+     content_elements_aside TEXT,
+ 
++    domains                TEXT,
++
+     tel                    TINYTEXT,
+     fax                    TINYTEXT,
+     email                  TINYTEXT,
+Index: typo3conf/ext/stratis_news/Configuration/TCA/Overrides/tx_news_domain_model_news.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- typo3conf/ext/stratis_news/Configuration/TCA/Overrides/tx_news_domain_model_news.php	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
++++ typo3conf/ext/stratis_news/Configuration/TCA/Overrides/tx_news_domain_model_news.php	(revision )
+@@ -197,6 +197,27 @@
+         'before:fal_media');
+ }
+ 
++
++
++$showDomain = [
++    'domains' => [
++    'label' => 'Domaines',
++        'config' => [
++            'type' => 'select',
++            'renderType' => 'selectMultipleSideBySide',
++            'foreign_table' => 'pages',
++            'foreign_table_where' => ' pid = 0 AND uid NOT IN (323,142) ORDER BY title ASC',
++            'size' => 5,
++            'minitems' => 0,
++        ],
++    ],
++];
++
++\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tx_news_domain_model_news', $showDomain);
++\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('tx_news_domain_model_news', 'domains', '',
++    'before:tags');
++
++
+ /**
+  * Add home_media FAL field
+  */
+Index: typo3conf/ext/stratis_news/Classes/Domain/Model/News.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- typo3conf/ext/stratis_news/Classes/Domain/Model/News.php	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
++++ typo3conf/ext/stratis_news/Classes/Domain/Model/News.php	(revision )
+@@ -49,6 +49,10 @@
+      * @var string
+      */
+     protected $activity3;
++    /**
++     * @var string
++     */
++    protected $domains;
+ 
+     /**
+      * @var string
+@@ -312,6 +316,26 @@
+     {
+         $this->contentElementsAside = $contentElementsAside;
+     }
++    /**
++     * Get domains
++     *
++     * @return string
++     */
++    public function getDomains()
++    {
++        return $this->domains;
++    }
++
++    /**
++     * Set domains
++     *
++     * @param string $contentElementsAside content elements
++     * @return void
++     */
++    public function setDomains($contentElementsAside)
++    {
++        $this->domains = $contentElementsAside;
++    }
+ 
+     /**
+      * Adds a content element aside to the record
