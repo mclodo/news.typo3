@@ -3,7 +3,7 @@ IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
---- typo3conf/ext/stratis_news/ext_tables.sql	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
+--- typo3conf/ext/stratis_news/ext_tables.sql	(revision )
 +++ typo3conf/ext/stratis_news/ext_tables.sql	(revision )
 @@ -12,6 +12,8 @@
      activity3              TEXT,
@@ -19,7 +19,7 @@ IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
---- typo3conf/ext/stratis_news/Configuration/TCA/Overrides/tx_news_domain_model_news.php	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
+--- typo3conf/ext/stratis_news/Configuration/TCA/Overrides/tx_news_domain_model_news.php	(revision )
 +++ typo3conf/ext/stratis_news/Configuration/TCA/Overrides/tx_news_domain_model_news.php	(revision )
 @@ -197,6 +197,27 @@
          'before:fal_media');
@@ -54,7 +54,7 @@ IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
---- typo3conf/ext/stratis_news/Classes/Domain/Model/News.php	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
+--- typo3conf/ext/stratis_news/Classes/Domain/Model/News.php	(revision )
 +++ typo3conf/ext/stratis_news/Classes/Domain/Model/News.php	(revision )
 @@ -49,6 +49,10 @@
       * @var string

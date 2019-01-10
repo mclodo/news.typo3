@@ -3,7 +3,7 @@ IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
---- typo3conf/ext/news/Classes/Controller/NewsController.php	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
+--- typo3conf/ext/news/Classes/Controller/NewsController.php	(revision )
 +++ typo3conf/ext/news/Classes/Controller/NewsController.php	(revision )
 @@ -145,6 +145,7 @@
          $demand->setTimeRestriction($settings['timeRestriction']);
@@ -18,7 +18,7 @@ IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
---- typo3conf/ext/news/Configuration/TypoScript/setup.txt	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
+--- typo3conf/ext/news/Configuration/TypoScript/setup.txt	(revision )
 +++ typo3conf/ext/news/Configuration/TypoScript/setup.txt	(revision )
 @@ -76,6 +76,7 @@
  		cropMaxCharacters = 150
@@ -33,7 +33,7 @@ IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
---- typo3conf/ext/news/Configuration/FlexForms/flexform_news.xml	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
+--- typo3conf/ext/news/Configuration/FlexForms/flexform_news.xml	(revision )
 +++ typo3conf/ext/news/Configuration/FlexForms/flexform_news.xml	(revision )
 @@ -126,6 +126,24 @@
  						</TCEforms>
@@ -65,7 +65,7 @@ IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
---- typo3conf/ext/news/Classes/Domain/Model/Dto/NewsDemand.php	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
+--- typo3conf/ext/news/Classes/Domain/Model/Dto/NewsDemand.php	(revision )
 +++ typo3conf/ext/news/Classes/Domain/Model/Dto/NewsDemand.php	(revision )
 @@ -128,6 +128,9 @@
      /** @var string */
@@ -107,7 +107,7 @@ IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
---- typo3conf/ext/news/Classes/Domain/Repository/NewsRepository.php	(revision c30d5219eb0ade91d3b52b2f04178dc38add641f)
+--- typo3conf/ext/news/Classes/Domain/Repository/NewsRepository.php	(revision )
 +++ typo3conf/ext/news/Classes/Domain/Repository/NewsRepository.php	(revision )
 @@ -288,6 +288,12 @@
              $constraints['pid'] = $query->in('pid', $pidList);
